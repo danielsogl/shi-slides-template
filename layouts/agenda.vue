@@ -47,7 +47,14 @@ const normalized = computed(() =>
       <ol
         v-if="normalized.length"
         class="shi-agenda__list"
-        :class="{ 'shi-agenda--focused': current != null }"
+        :class="{
+          'shi-agenda--focused': current != null,
+          // Ab sieben Punkten läuft die Liste sonst unten aus der Folie. Die
+          // Enge hängt an der Anzahl und gehört deshalb ins Layout – sonst
+          // müsste jede Agenda-Folie eines langen Decks einzeln nachjustiert
+          // werden.
+          'shi-agenda--dense': normalized.length > 6,
+        }"
       >
         <li
           v-for="(item, i) in normalized"

@@ -223,11 +223,21 @@
   text-align: center;
   padding: 3rem 4.5rem;
 }
-.shi-statement__text {
+/* Das `p` muss mit in den Selektor: Markdown verpackt den Text in einen
+   Absatz, und dessen Zeilenhöhe kommt sonst aus der Theme-Vorgabe – die ist
+   fest in rem gesetzt und skaliert nicht mit 2.5rem Schrift mit. Ergebnis
+   waren 24px Zeilenabstand bei 40px Schrift, also überlappende Zeilen.
+   Einzeilige Statements haben den Fehler verdeckt. `.shi-quote__text` macht
+   es seit jeher richtig – hier dieselbe Form. */
+.shi-statement__text,
+.shi-statement__text p {
   font-size: 2.5rem;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.3;
   max-width: 22ch;
+}
+.shi-statement__text p {
+  margin: 0;
 }
 .shi-statement__source {
   margin-top: 1.2rem;
@@ -327,4 +337,24 @@
 }
 .shi-outro__logo {
   width: auto;
+}
+
+/* Lange Agenden (ab 7 Punkten) enger setzen, statt sie unten aus der Folie
+   laufen zu lassen. Greift nur oberhalb der Schwelle – kurze Agenden bleiben
+   unverändert. */
+.shi-agenda--dense .shi-agenda__item {
+  padding-top: 0.22rem;
+  padding-bottom: 0.22rem;
+}
+.shi-agenda--dense .shi-agenda__label {
+  font-size: 1.04rem;
+}
+.shi-agenda--dense .shi-agenda__hint {
+  font-size: 0.76rem;
+}
+.shi-agenda--dense .shi-agenda__item::before {
+  font-size: 0.84rem;
+}
+.shi-agenda__list.shi-agenda--dense {
+  gap: 0;
 }
