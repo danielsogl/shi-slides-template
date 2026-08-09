@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Ältere Läufe desselben Branches abbrechen – spart Minuten bei Dependabot-PRs.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build & Export
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24 # gleiche Major wie netlify.toml
+          cache: npm
+
+      - run: npm ci
+
+      - name: Deck bauen
+        run: npm run build
+
+      # Der PDF-Export ist eine Kernfunktion des Templates und genau das, was
+      # ein Slidev- oder Playwright-Update kaputt macht. Deshalb im CI mitgeprüft.
+      # `--with-deps` installiert zusätzlich die Systembibliotheken des Runners.
+      - name: Chromium für den Export bereitstellen
+        run: npx playwright install --with-deps chromium
+
+      - name: PDF exportieren
+        run: npm run export -- --output shi-slides.pdf --timeout 60000
+
+      # PPTX läuft über einen anderen Pfad als PDF (Folien als PNG + pptxgenjs)
+      # und bricht unabhängig davon. Kostet ~10 s, also mitgeprüft.
+      - name: PPTX exportieren
+        run: npm run export:pptx -- --output shi-slides.pptx --timeout 60000
+
+      # Das PDF wird nur erzeugt, um den Export zu prüfen, und danach verworfen –
+      # dauerhaft hochgeladene Artefakte kosten unnötig Storage. Wer dieses Repo
+      # als Template nutzt und das gebaute PDF im Lauf braucht, kommentiert ein:
+      #
+      # - uses: actions/upload-artifact@v7
+      #   with:
+      #     name: shi-slides-pdf
+      #     path: shi-slides.pdf
+      #     if-no-files-found: error
+      #     retention-days: 14

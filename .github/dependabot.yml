@@ -1,0 +1,38 @@
+version: 2
+
+updates:
+  # ── npm ───────────────────────────────────────────────────────────────
+  # Minor und Patch laufen gesammelt in einem PR – der CI-Build prüft ihn.
+  # Major-Updates kommen bewusst einzeln: ein Slidev-Major kann Layouts,
+  # Shiki-Themes oder den Export brechen und will einzeln angesehen werden.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
+
+  # ── GitHub Actions ────────────────────────────────────────────────────
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Berlin
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns:
+          - '*'

@@ -1,662 +1,682 @@
 ---
-# try also 'default' to start simple
-theme: seriph
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
-# some information about your slides (markdown enabled)
-title: Welcome to Slidev
-info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
+# ─── Deck-Konfiguration ───────────────────────────────────────────────
+# Für ein neues Deck: Titel, Speaker, Event und themeConfig anpassen.
+theme: default
+title: SHI Slides Template
+titleTemplate: '%s · SHI GmbH'
+author: SHI GmbH
+favicon: /favicon.png
+lang: de # sonst steht <html lang="en"> im Deck und im PDF
 
-  Learn more at [Sli.dev](https://sli.dev)
-# apply UnoCSS classes to the current slide
-class: text-center
-# https://sli.dev/features/drawing
+# CI-Schriften (wie shi-gmbh.com: Open Sans 400/600/700).
+# provider: none – die Fonts liegen als Paket im Repo und werden in
+# styles/index.ts geladen. Nichts wird zur Laufzeit von Google geholt.
+fonts:
+  sans: Open Sans
+  serif: Open Sans
+  mono: JetBrains Mono
+  provider: none
+
+# 'auto' = umschaltbar (Taste "d" bzw. Button in der Navigationsleiste), Start
+# nach Systemeinstellung. 'light' oder 'dark' nageln das Deck fest – nur dann
+# ist der Umschalter bewusst deaktiviert.
+colorSchema: auto
+aspectRatio: 16/9
+canvasWidth: 980
+lineNumbers: false
+transition: slide-left
 drawings:
   persist: false
-# slide transition: https://sli.dev/guide/animations.html#slide-transitions
-transition: slide-left
-# enable Comark Syntax: https://comark.dev/syntax/markdown
-comark: true
-# duration of the presentation
-duration: 35min
+# download: true würde bei JEDEM `slidev build` einen PDF-Export mit Chromium
+# anstoßen – auch im Deploy auf Netlify/Vercel, wo kein Browser installiert ist.
+# Wer den Download-Button will: PDF per `npm run export` bauen, nach public/
+# legen und hier `download: /shi-slides.pdf` eintragen.
+download: false
+exportFilename: shi-slides
+comark: true # erlaubt `[Text]{style="color:red"}` und `![](/x.png){width=500px}`
+
+# Vorschaubild/Beschreibung beim Teilen des gehosteten Decks (netlify.toml / vercel.json).
+# Ohne ogImage bleibt die Vorschau eine reine Textkarte. Bild nach public/ legen
+# und beide Zeilen mit der echten Deploy-URL einkommentieren.
+# (`ogImage: auto` gäbe es auch, würde aber beim Build wieder Chromium starten.)
+seoMeta:
+  ogTitle: SHI Slides Template
+  ogDescription: Basis-Template für Präsentationen der SHI GmbH
+  twitterCard: summary_large_image
+  # ogUrl: https://deck.example.com/
+  # ogImage: https://deck.example.com/og.png
+
+# Fußzeile auf allen Inhaltsfolien (slide-bottom.vue)
+themeConfig:
+  footer: SHI Slides Template
+  event: Interner Tech Talk · 2026
+  # confidential: Intern – vertraulich   # nur für interne Decks setzen
+
+info: |
+  ## SHI Slides Template
+  Basis-Template für Konferenz-, Kunden- und interne Präsentationen der SHI GmbH.
+
+layout: cover
+subtitle: Ein Baukasten für Konferenz-, Kunden- und interne Vorträge im SHI-Design
+speaker: Vorname Nachname
+role: Rolle · SHI GmbH
+event: Interner Tech Talk
+date: 2026
 ---
 
-# Welcome to Slidev
+# SHI Slides Template
 
-Presentation slides for developers
+<!--
+Presenter-Notes stehen in HTML-Kommentaren und sind nur im Presenter-Modus (Taste "P") sichtbar.
+-->
 
-<div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
-  Press Space for next page <carbon:arrow-right />
+---
+layout: agenda
+note: Halte die Agenda auf 4–6 Punkte. Vor jedem Kapitel mit `current:` wiederholen.
+items:
+  - label: Layouts
+    hint: Intro, Agenda, Kapitel, Outro
+  - label: Inhaltsfolien
+    hint: Text, Grafik, Code
+  - label: Komponenten
+    hint: Karten, Kennzahlen, Callouts
+  - label: Diagramme & Icons
+    hint: Abläufe, Architektur, KI-Themen
+  - label: Eigenes Deck bauen
+    hint: 5 min
+---
+
+---
+layout: section
+number: 1
+subtitle: Alles, was ein Vortrag an Gerüst braucht – ohne Design-Entscheidungen pro Folie.
+---
+
+# Layouts
+
+---
+layout: agenda
+current: 1
+items:
+  - Layouts
+  - Inhaltsfolien
+  - Komponenten
+  - Diagramme & Icons
+  - Eigenes Deck bauen
+---
+
+---
+
+# Layout-Übersicht
+
+Eigene SHI-Layouts – der Rest kommt aus Slidev.
+
+<div class="grid grid-cols-2 gap-x-10 mt-6 text-sm">
+
+| Eigenes Layout | Wofür                               |
+| -------------- | ----------------------------------- |
+| `cover`        | Titelfolie mit Speaker & Event      |
+| `agenda`       | Agenda, wiederholbar mit `current:` |
+| `section`      | Kapiteltrenner mit Nummer           |
+| `speaker`      | Vorstellung der sprechenden Person  |
+| `statement`    | Die eine Aussage, die bleibt        |
+| `quote`        | Kundenzitat / Testimonial           |
+| `outro`        | Abschluss, Kontakt, QR-Code         |
+
+<div>
+
+**Dazu alle Slidev-Built-ins**, auf die SHI-CI gestylt:
+
+<div class="flex flex-wrap gap-2 mt-3">
+  <Tag color="neutral">default</Tag>
+  <Tag color="neutral">center</Tag>
+  <Tag color="neutral">two-cols</Tag>
+  <Tag color="neutral">two-cols-header</Tag>
+  <Tag color="neutral">image-left</Tag>
+  <Tag color="neutral">image-right</Tag>
+  <Tag color="neutral">iframe-right</Tag>
+  <Tag color="neutral">full</Tag>
+  <Tag color="neutral">fact</Tag>
 </div>
 
-<div class="abs-br m-6 text-xl">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="slidev-icon-btn">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" class="slidev-icon-btn">
-    <carbon:logo-github />
-  </a>
+<Callout type="tip" class="mt-6">
+Layouts liegen in <code>layouts/</code>, Komponenten in <code>components/</code> – beides
+lässt sich pro Deck erweitern, ohne das Template zu forken.
+</Callout>
+
 </div>
 
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
+</div>
 
 ---
-transition: fade-out
+layout: speaker
+name: Vorname Nachname
+role: Rolle · SHI GmbH
+image: /speaker-placeholder.svg
+mail: vorname.nachname@shi-gmbh.com
+linkedin: profil-slug
+github: username
 ---
 
-# What is Slidev?
+- Was du machst, in einer Zeile
+- Ein Fachthema, das zum Vortrag passt
+- Ein Detail, an das sich Leute erinnern
 
-Slidev is a slides maker and presenter designed for developers, consist of the following features
-
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - themes can be shared and re-used as npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embed Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export to PDF, PPTX, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - virtually anything that's possible on a webpage is possible in Slidev
-<br>
-<br>
-
-Read more about [Why Slidev?](https://sli.dev/guide/why)
-
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/features/slide-scope-style
--->
-
-<style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-</style>
-
-<!--
-Here is another comment.
--->
+<div class="mt-4 flex gap-2">
+  <Tag>Suche</Tag>
+  <Tag color="teal">TypeScript</Tag>
+  <Tag color="violet">RAG</Tag>
+</div>
 
 ---
-transition: slide-up
-level: 2
+layout: statement
+source: Setze hier die Quelle – oder lass das Feld weg.
 ---
 
-# Navigation
-
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/ui#navigation-bar)
-
-## Keyboard Shortcuts
-
-|                                                     |                             |
-| --------------------------------------------------- | --------------------------- |
-| <kbd>right</kbd> / <kbd>space</kbd>                 | next animation or slide     |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd>                                       | previous slide              |
-| <kbd>down</kbd>                                     | next slide                  |
-
-<!-- https://sli.dev/guide/animations.html#click-animation -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-  alt=""
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
+Eine Folie. Ein Gedanke.
 
 ---
-layout: two-cols
-layoutClass: gap-16
+layout: section
+number: 2
+subtitle: Text, Grafik, Code – die drei Fälle, die 90 % eines Vortrags ausmachen.
 ---
 
-# Table of contents
+# Inhaltsfolien
 
-You can use the `Toc` component to generate a table of contents for your slides:
+---
+layout: agenda
+current: 2
+items:
+  - Layouts
+  - Inhaltsfolien
+  - Komponenten
+  - Diagramme & Icons
+  - Eigenes Deck bauen
+---
 
-```html
-<Toc minDepth="1" maxDepth="1" />
-```
+---
 
-The title will be inferred from your slide content, or you can override it with `title` and `level` in your frontmatter.
+# Standardfolie
+
+Fließtext bleibt kurz. Die Aufzählung trägt, die Stimme erklärt.
+
+- Erster Punkt, eine Zeile
+- Zweiter Punkt mit **Betonung**
+- Dritter Punkt mit [Link](https://shi-gmbh.com)
+
+<v-clicks>
+
+- Punkte per `<v-clicks>` nacheinander einblenden
+- Klick für Klick, ohne Frontmatter-Aufwand
+
+</v-clicks>
+
+---
+layout: two-cols-header
+---
+
+# Zwei Spalten
+
+Für Gegenüberstellungen: vorher/nachher, Problem/Lösung, Option A/B.
+
+::left::
+
+### Vorher
+
+- Volltextsuche über alles
+- Ranking nach TF-IDF
+- Keine Facetten
 
 ::right::
 
-<Toc text-sm minDepth="1" maxDepth="2" />
+### Nachher
+
+- Semantische Suche + Filter
+- Gelerntes Ranking
+- Facetten aus Metadaten
 
 ---
 layout: image-right
-image: https://cover.sli.dev
+image: /image-placeholder.svg
+---
+
+# Text neben Grafik
+
+`image-left` und `image-right` füllen die halbe Folie randlos mit einem Bild.
+
+- Screenshot, Diagramm oder Foto
+- Text bleibt links lesbar
+- Kein Beschnitt-Gefummel
+
+<Callout type="info" class="mt-4">
+Bilder gehören nach <code>public/</code> und werden mit absolutem Pfad referenziert:
+<code>/architektur.png</code>.
+</Callout>
+
+---
+
+# Diagramm
+
+Die Standardform: `<Flow>` zeichnet eine Kette in CI-Farben – ohne Mermaid,
+ohne Bilddatei. Details und die Mermaid-Fälle in Kapitel 4.
+
+<Flow class="mt-10" :items="[
+  { label: 'Quellsysteme', icon: 'i-carbon-data-base' },
+  { label: 'Apache NiFi', icon: 'i-carbon-flow-data', hint: 'Aufbereitung' },
+  { label: 'Solr / OpenSearch', icon: 'i-carbon-search', hint: 'Index' },
+  { label: 'InfoPilot', icon: 'i-carbon-application' },
+  { label: 'Nutzer:innen', icon: 'i-carbon-user' },
+]" />
+
 ---
 
 # Code
 
-Use code snippets and get the highlighting directly, and even types hover!
+```ts {3-6|8-10}
+import { Client } from '@opensearch-project/opensearch'
 
-```ts [filename-example.ts] {all|4|6|6-7|9|all} twoslash
-// TwoSlash enables TypeScript hover information
-// and errors in markdown code blocks
-// More at https://shiki.style/packages/twoslash
-import { computed, ref } from 'vue'
+const client = new Client({
+  node: process.env.OPENSEARCH_URL,
+  ssl: { rejectUnauthorized: true },
+})
 
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
-
-doubled.value = 2
-```
-
-<arrow v-click="[4, 5]" x1="350" y1="310" x2="195" y2="342" color="#953" width="2" arrowSize="1" />
-
-<!-- This allow you to embed external code blocks -->
-<<< @/snippets/external.ts#snippet
-
-<!-- Footer -->
-
-[Learn more](https://sli.dev/features/line-highlighting)
-
-<!-- Inline style -->
-<style>
-.footnotes-sep {
-  @apply mt-5 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
-<!--
-Notes can also sync with clicks
-
-[click] This will be highlighted after the first click
-
-[click] Highlighted with `count = ref(0)`
-
-[click:3] Last click (skip two clicks)
--->
-
----
-level: 2
----
-
-# Shiki Magic Move
-
-Powered by [shiki-magic-move](https://shiki-magic-move.netlify.app/), Slidev supports animations across multiple code snippets.
-
-Add multiple code blocks and wrap them with <code>````md magic-move</code> (four backticks) to enable the magic move. For example:
-
-````md magic-move {lines: true}
-```ts {*|2|*}
-// step 1
-const author = reactive({
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
+const result = await client.search({
+  index: 'werke',
+  body: { query: { multi_match: { query: 'Arbeitsrecht', fields: ['titel^3', 'text'] } } },
 })
 ```
 
-```ts {*|1-2|3-4|3-4,8}
-// step 2
-export default {
-  data() {
-    return {
-      author: {
-        name: 'John Doe',
-        books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
-        ]
-      }
-    }
-  }
-}
-```
-
-```ts
-// step 3
-export default {
-  data: () => ({
-    author: {
-      name: 'John Doe',
-      books: [
-        'Vue 2 - Advanced Guide',
-        'Vue 3 - Basic Guide',
-        'Vue 4 - The Mystery'
-      ]
-    }
-  })
-}
-```
-
-Non-code blocks are ignored.
-
-```vue
-<!-- step 4 -->
-<script setup>
-const author = {
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-}
-</script>
-```
-````
+<Callout type="tip" title="Zeilen schrittweise hervorheben" class="mt-4">
+Der Marker <code>3-6|8-10</code> blendet die Blöcke nacheinander ein – ideal, um Code zu
+erzählen statt vorzulesen. <code>all</code> als erster Schritt zeigt zunächst alles,
+sieht im PDF-Export ohne <code>--with-clicks</code> aber ausgegraut aus.
+</Callout>
 
 ---
 
-# Components
+# Code aus Datei
 
-<div grid="~ cols-2 gap-4">
+Externer Code bleibt lauffähig und lintbar – nie wieder Copy-Paste-Drift.
+
+<<< @/snippets/external.ts#snippet ts {*}{lines:true}
+
+---
+layout: quote
+author: Dr. Maxine Muster
+position: Leiterin Digitale Produkte, Beispiel-Verlag
+---
+
+Die Trefferqualität ist bei uns heute ein Verkaufsargument, kein Ticket im Backlog.
+
+---
+layout: section
+number: 3
+subtitle: Bausteine, die in jedem Deck wieder auftauchen.
+---
+
+# Komponenten
+
+---
+layout: agenda
+current: 3
+items:
+  - Layouts
+  - Inhaltsfolien
+  - Komponenten
+  - Diagramme & Icons
+  - Eigenes Deck bauen
+---
+
+---
+
+# Karten
+
+<CardGrid :cols="3" class="mt-8">
+  <Card title="Suche" icon="i-carbon-search" variant="accent">
+    Solr, Elasticsearch und OpenSearch – von der Analyse bis zum Relevanz-Tuning.
+  </Card>
+  <Card title="Daten" icon="i-carbon-data-base" variant="accent">
+    Apache NiFi, Cribl und Cloudera für belastbare Datenstrecken.
+  </Card>
+  <Card title="KI" icon="i-carbon-machine-learning-model" variant="accent">
+    RAG-Systeme und Assistenten auf dem eigenen Bestand.
+  </Card>
+</CardGrid>
+
+---
+
+# Kennzahlen & Hinweise
+
+<div class="grid grid-cols-3 gap-6 mt-6">
+  <Stat value="3×" label="schnellere Suche" hint="Median über alle Anfragen" />
+  <Stat value="92 %" label="Trefferquote" hint="Top-5, gemessen an 1.200 Fragen" />
+  <Stat value="6 Wo." label="bis zum Piloten" hint="Kickoff bis erste Indexstrecke" />
+</div>
+
+<div class="grid grid-cols-2 gap-3 mt-8">
+  <Callout type="info" title="Info">Kontext, der nicht in die Aufzählung passt.</Callout>
+  <Callout type="tip" title="Tipp">Der Kniff, den man sonst erst nach zwei Tagen findet.</Callout>
+  <Callout type="warn" title="Achtung">Stolperstein, den das Publikum kennen sollte.</Callout>
+  <Callout type="danger" title="Kein Weg">Anti-Pattern, klar als solches markiert.</Callout>
+</div>
+
+---
+
+# Ablauf & Zeitstrahl
+
+<div class="grid grid-cols-2 gap-10 mt-6">
+
+<Steps :items="[
+  { title: 'Verstehen', body: 'Daten, Nutzerfragen, Zielbild.' },
+  { title: 'Prototyp', body: 'Trefferqualität an echten Daten messen.' },
+  { title: 'Bauen', body: 'Suchstrecke und Portal produktionsreif.' },
+]" />
+
+<Timeline :items="[
+  { when: 'Q1', title: 'Discovery', body: 'Datensichtung und Zielmetriken.' },
+  { when: 'Q2', title: 'Pilot', body: 'Erste Indexstrecke live.' },
+  { when: 'Q3', title: 'Rollout', tone: 'muted' },
+]" />
+
+</div>
+
+---
+
+# Logos
+
+Kunden- oder Tech-Logos, standardmäßig entsättigt.
+
+<LogoWall
+  class="mt-10"
+  height="52px"
+  :logos="[
+    { src: '/logo-placeholder.svg', alt: 'Kunde A' },
+    { src: '/logo-placeholder.svg', alt: 'Kunde B' },
+    { src: '/logo-placeholder.svg', alt: 'Kunde C' },
+  ]"
+/>
+
+<Callout type="info" class="mt-10">
+Fremdlogos nur mit Freigabe zeigen. <code>original</code> schaltet auf die Originalfarben um.
+</Callout>
+
+---
+src: ./pages/shi-company.md
+---
+
+---
+layout: section
+number: 4
+subtitle: Abläufe, Architekturen und KI-Themen – ohne dass es nach Wiki aussieht.
+---
+
+# Diagramme & Icons
+
+---
+layout: agenda
+current: 4
+items:
+  - Layouts
+  - Inhaltsfolien
+  - Komponenten
+  - Diagramme & Icons
+  - Eigenes Deck bauen
+---
+
+---
+
+# Pipeline
+
+<Flow class="mt-8" clicks :items="[
+  { label: 'Frage', icon: 'i-carbon-chat' },
+  { label: 'Embedding', icon: 'i-carbon-model-alt', hint: 'Vektor' },
+  { label: 'Retrieval', icon: 'i-carbon-search', hint: 'Top-k aus Solr' },
+  { label: 'Kontext', icon: 'i-carbon-document', hint: 'Passagen + Quellen' },
+  { label: 'LLM', icon: 'i-carbon-machine-learning-model', tone: 'brand' },
+  { label: 'Antwort', icon: 'i-carbon-checkmark-outline', hint: 'mit Belegen' },
+]" />
+
+<Callout type="tip" title="Schritt für Schritt erzählen" class="mt-12">
+Das Attribut <code>clicks</code> blendet die Knoten einzeln ein. Für den PDF-Export mit
+allen Zwischenschritten <code>npm run export -- --with-clicks</code> nutzen.
+</Callout>
+
+---
+
+# Kreislauf
+
+<div class="grid grid-cols-[1.35fr_1fr] gap-10 mt-6 items-center">
+
+<Flow
+  loop="Beobachtung fließt in den nächsten Zug"
+  :items="[
+    { label: 'Ziel', icon: 'i-carbon-idea' },
+    { label: 'Plan', icon: 'i-carbon-decision-tree' },
+    { label: 'Werkzeug', icon: 'i-carbon-api', tone: 'brand' },
+    { label: 'Prüfung', icon: 'i-carbon-rule' },
+  ]"
+/>
+
 <div>
 
-You can use Vue components directly inside your slides.
+`loop` zeichnet die Rückführung – der Standardfall für Agenten, Feedback-Schleifen
+und iterative Prozesse.
 
-We have provided a few built-in components like `<Tweet/>`, `<BlueSky/>`, and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
-```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
+<Callout type="warn" title="Abbruch mit erzählen" class="mt-4">
+Zu jeder Schleife gehört die Bedingung, die sie beendet: Zugbudget, Kosten, Konfidenz.
+</Callout>
 
 </div>
-<div>
-
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
-
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
----
-class: px-20
----
-
-# Themes
-
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true" alt="">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true" alt="">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/guide/theme-addon#use-theme) and
-check out the [Awesome Themes Gallery](https://sli.dev/resources/theme-gallery).
-
----
-
-# Clicks Animations
-
-You can add `v-click` to elements to add a click animation.
-
-<div v-click>
-
-This shows up when you press <kbd>space</kbd> or <kbd>right</kbd>, or click outside the slide on the right.
-
-```html
-<div v-click>This shows up when you trigger a click animation.</div>
-```
-
-</div>
-
-<p v-click>
-You can also add modifiers to change the animation:
-</p>
-
-<div class="grid gap-3 mt-4 text-sm" style="grid-template-columns: repeat(3, 1fr) 1.5fr 1fr">
-  <div v-after.up class="p-3 rounded border border-primary/20 bg-primary/10">
-    <div class="font-mono text-xs opacity-60 mb-1">v-click.up</div>
-    <div>Slide from bottom</div>
-  </div>
-  <div v-click.fade-in class="p-3 rounded border border-primary/30 bg-primary/15">
-    <div class="font-mono text-xs opacity-60 mb-1">v-click.fade-in</div>
-    <div>Fade in</div>
-  </div>
-  <div v-click.fade class="p-3 rounded border border-primary/40 bg-primary/20">
-    <div class="font-mono text-xs opacity-60 mb-1">v-click.fade</div>
-    <div>Dim (0.5 opacity)</div>
-  </div>
-  <div v-click.fade.right.scale class="p-3 rounded border border-primary/50 bg-primary/25">
-    <div class="font-mono text-xs opacity-60 mb-1">v-click.fade.right.scale</div>
-    <div>Composed</div>
-  </div>
-  <div v-click.none class="p-3 rounded border border-primary/60 bg-primary/30">
-    <div class="font-mono text-xs opacity-60 mb-1">v-click.none</div>
-    <div>No transition</div>
-  </div>
-</div>
-
-<v-click>
-
-The <span v-mark.red="7"><code>v-mark</code> directive</span>
-also allows you to add
-<span v-mark.circle.orange="8">inline marks</span>
-, powered by [Rough Notation](https://roughnotation.com/):
-
-```html
-<span v-mark.underline.orange>inline markers</span>
-```
-
-</v-click>
-
-<div v-click mt-12>
-
-[Learn more](https://sli.dev/guide/animations#click-animation)
 
 </div>
 
 ---
 
-# Motions
+# Architektur in Schichten
 
-Motion animations are powered by [@vueuse/motion](https://motion.vueuse.org/), triggered by `v-motion` directive.
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }"
-  :click-3="{ x: 80 }"
-  :leave="{ x: 1000 }"
->
-  Slidev
-</div>
-```
-
-<div class="w-60 relative">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-square.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-circle.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-triangle.png"
-      alt=""
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 30, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn more](https://sli.dev/guide/animations.html#motion)
-
-</div>
+<Layers class="mt-6" :items="[
+  { title: 'Erlebnis', hint: 'was Nutzende sehen', items: [
+    { label: 'Chat-Assistent', icon: 'i-carbon-chat-bot' },
+    { label: 'Suchportal', icon: 'i-carbon-search' },
+    { label: 'API', icon: 'i-carbon-api' },
+  ] },
+  { title: 'Orchestrierung', tone: 'brand', items: [
+    { label: 'Prompt & Tools', icon: 'i-carbon-prompt-template' },
+    { label: 'Guardrails', icon: 'i-carbon-security' },
+    { label: 'Tracing', icon: 'i-carbon-ai-governance-lifecycle' },
+  ] },
+  { title: 'Modelle', items: [
+    { label: 'LLM', icon: 'i-carbon-machine-learning-model' },
+    { label: 'Embeddings', icon: 'i-carbon-model-alt' },
+    { label: 'Reranker', icon: 'i-carbon-summary-kpi' },
+  ] },
+  { title: 'Wissen', hint: 'euer Bestand', items: [
+    { label: 'Solr / OpenSearch', icon: 'i-carbon-search' },
+    { label: 'Vektorindex', icon: 'i-carbon-chart-network' },
+    { label: 'Quellsysteme', icon: 'i-carbon-data-base' },
+  ] },
+  { title: 'Betrieb', tone: 'muted', items: ['Kosten', 'Auswertung', 'Datenschutz'] },
+]" />
 
 ---
 
-# $\LaTeX$
+# Mermaid für Sequenzen
 
-$\LaTeX$ is supported out-of-box. Powered by [$\KaTeX$](https://katex.org/).
+Zeitliche Abläufe zwischen Beteiligten – hier ist Mermaid schneller als jede Komponente.
 
-<div h-3 />
+<div class="flex justify-center mt-2">
 
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$ {1|3|all}
-\begin{aligned}
-\nabla \cdot \vec{E} &= \frac{\rho}{\varepsilon_0} \\
-\nabla \cdot \vec{B} &= 0 \\
-\nabla \times \vec{E} &= -\frac{\partial\vec{B}}{\partial t} \\
-\nabla \times \vec{B} &= \mu_0\vec{J} + \mu_0\varepsilon_0\frac{\partial\vec{E}}{\partial t}
-\end{aligned}
-$$
-
-[Learn more](https://sli.dev/features/latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
-
-```mermaid {scale: 0.5, alt: 'A simple sequence diagram'}
+```mermaid {scale: 0.72}
 sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
-```
-
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectiveness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
+  autonumber
+  actor N as Nutzer:in
+  participant A as Assistent
+  participant S as Suche
+  participant L as LLM
+  N->>A: Frage
+  A->>S: Suchanfrage + Filter
+  S-->>A: Top-k Passagen
+  A->>L: Prompt mit Kontext
+  L-->>A: Antwort + Zitate
+  A-->>N: Antwort mit Quellenangabe
 ```
 
 </div>
 
-Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML Diagrams](https://sli.dev/features/plantuml)
-
----
-foo: bar
-dragPos:
-  square: 691,32,167,_,-16
 ---
 
-# Draggable Elements
+# Mermaid für Strukturen
 
-Double-click on the draggable elements to edit their positions.
+Klassen, Zustände, Entitäten – dieselbe Palette, dieselbe Schrift.
+`direction LR` nutzt das Querformat der Folie.
 
-<br>
+<div class="flex justify-center mt-2">
 
-###### Directive Usage
-
-```md
-<img v-drag="'square'" src="https://sli.dev/logo.png">
+```mermaid {scale: 0.78}
+classDiagram
+  direction LR
+  class Suchanfrage {
+    +String text
+    +Filter[] filter
+    +ausfuehren() Treffer[]
+  }
+  class Index {
+    <<interface>>
+    +suche(Suchanfrage) Treffer[]
+  }
+  class Treffer {
+    +String id
+    +float score
+  }
+  class SolrIndex
+  class VektorIndex
+  Suchanfrage --> Index : nutzt
+  Index --> Treffer : liefert
+  Index <|.. SolrIndex
+  Index <|.. VektorIndex
 ```
 
-<br>
-
-###### Component Usage
-
-```md
-<v-drag text-3xl>
-  <div class="i-carbon:arrow-up" />
-  Use the `v-drag` component to have a draggable container!
-</v-drag>
-```
-
-<v-drag pos="663,206,261,_,-15">
-  <div text-center text-3xl border border-main rounded>
-    Double-click me!
-  </div>
-</v-drag>
-
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-
-###### Draggable Arrow
-
-```md
-<v-drag-arrow two-way />
-```
-
-<v-drag-arrow pos="67,452,253,46" two-way op70 />
-
----
-src: ./pages/imported-slides.md
-hide: false
----
+</div>
 
 ---
 
-# Monaco Editor
+# Welches Werkzeug wofür
 
-Slidev provides built-in Monaco Editor support.
+<div class="text-sm mt-4">
 
-Add `{monaco}` to the code block to turn it into an editor:
+| Fall                                 | Werkzeug                   | Lizenz               |
+| ------------------------------------ | -------------------------- | -------------------- |
+| Ablauf, Pipeline, Schleife           | `<Flow>`                   | im Template          |
+| Architektur, Stack                   | `<Layers>`                 | im Template          |
+| Vergleich, Bausteine                 | `<CardGrid>` / `<Steps>`   | im Template          |
+| Sequenz, Klassen, Zustand, ER        | Mermaid (eingebaut)        | MIT                  |
+| Freie Skizze, Whiteboard-Optik       | Excalidraw → SVG           | MIT                  |
+| Screenshot, Fremdgrafik              | Bild in `public/`          | Rechte prüfen        |
 
-```ts {monaco}
-import { ref } from 'vue'
-import { emptyArray } from './external'
+</div>
 
-const arr = ref(emptyArray(10))
-```
-
-Use `{monaco-run}` to create an editor that can execute the code directly in the slide:
-
-```ts {monaco-run}
-import { version } from 'vue'
-import { emptyArray, sayHello } from './external'
-
-sayHello()
-console.log(`vue ${version}`)
-console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-2)!], [1, 1]))
-```
+<Callout type="warn" title="Kein PlantUML" class="mt-6">
+Slidev kennt <code>plantuml</code>-Blöcke, lädt sie aber bei jedem Rendern von
+<code>plantuml.com</code> – der Diagrammtext verlässt damit das Haus. UML geht in Mermaid:
+<code>classDiagram</code>, <code>stateDiagram-v2</code>, <code>erDiagram</code>.
+</Callout>
 
 ---
-layout: center
-class: text-center
+
+# Icons
+
+Alle Icons kommen als CSS-Klasse, ohne Datei im Repo: `<div class="i-carbon-ai" />`.
+
+<div class="grid grid-cols-6 gap-y-6 gap-x-4 mt-8 text-center text-xs">
+  <div><div class="i-carbon-ai text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">ai</div></div>
+  <div><div class="i-carbon-machine-learning-model text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">machine-learning-model</div></div>
+  <div><div class="i-carbon-model-alt text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">model-alt</div></div>
+  <div><div class="i-carbon-prompt-template text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">prompt-template</div></div>
+  <div><div class="i-carbon-chat-bot text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">chat-bot</div></div>
+  <div><div class="i-carbon-decision-tree text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">decision-tree</div></div>
+  <div><div class="i-carbon-ai-governance-lifecycle text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">ai-governance-lifecycle</div></div>
+  <div><div class="i-carbon-text-mining text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">text-mining</div></div>
+  <div><div class="i-carbon-data-vis-1 text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">data-vis-1</div></div>
+  <div><div class="i-carbon-flow-data text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">flow-data</div></div>
+  <div><div class="i-carbon-security text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">security</div></div>
+  <div><div class="i-carbon-ai-launch text-3xl mx-auto text-[var(--shi-brand)]" /><div class="mt-1 font-mono">ai-launch</div></div>
+</div>
+
+<Callout type="info" class="mt-8">
+Auswahl unter <a href="https://icones.js.org/collection/carbon">icones.js.org/collection/carbon</a>.
+Carbon steht unter Apache 2.0 – kommerziell nutzbar, Namensnennung nicht nötig.
+</Callout>
+
 ---
 
-# Learn More
+# Anbieter-Logos
 
-[Documentation](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/resources/showcases)
+<LogoWall
+  class="mt-8"
+  height="42px"
+  original
+  :logos="[
+    { icon: 'i-logos-openai-icon', alt: 'OpenAI' },
+    { icon: 'i-logos-anthropic-icon', alt: 'Anthropic' },
+    { icon: 'i-logos-hugging-face-icon', alt: 'Hugging Face' },
+    { icon: 'i-logos-mistral-ai-icon', alt: 'Mistral AI' },
+    { icon: 'i-logos-qdrant-icon', alt: 'Qdrant' },
+    { icon: 'i-logos-elasticsearch', alt: 'Elasticsearch' },
+    { icon: 'i-logos-solr', alt: 'Apache Solr' },
+    { icon: 'i-simple-icons-langchain', alt: 'LangChain' },
+    { icon: 'i-simple-icons-ollama', alt: 'Ollama' },
+  ]"
+/>
 
-<PoweredBySlidev mt-10 />
+<Callout type="warn" title="Marken bleiben Marken" class="mt-12">
+Die Icon-Sammlungen stehen unter CC0, die Logos selbst sind Marken ihrer Inhaber.
+Also: nur für tatsächlich eingesetzte oder besprochene Produkte, unverändert, ohne
+den Eindruck einer Partnerschaft. Kundenlogos nur mit schriftlicher Freigabe.
+</Callout>
+
+---
+layout: section
+number: 5
+subtitle: Kopieren, drei Dateien anfassen, loslegen.
+---
+
+# Eigenes Deck bauen
+
+---
+layout: agenda
+current: 5
+items:
+  - Layouts
+  - Inhaltsfolien
+  - Komponenten
+  - Diagramme & Icons
+  - Eigenes Deck bauen
+---
+
+---
+
+# In fünf Minuten startklar
+
+<Steps class="mt-8" :items="[
+  { title: 'Template kopieren', body: 'Repo als Vorlage verwenden, dann npm install.' },
+  { title: 'Headmatter anpassen', body: 'title, speaker, event, date und themeConfig in slides.md.' },
+  { title: 'Kapitel schreiben', body: 'Beispielfolien ersetzen, Firmenblock via src: einbinden.' },
+  { title: 'Vortragen & exportieren', body: 'npm run dev zum Vortragen, npm run export für das PDF.' },
+]" />
+
+<Callout type="warn" title="Vor externen Talks" class="mt-8">
+<code>themeConfig.confidential</code> entfernen und die Zahlen im Firmenblock gegen
+shi-gmbh.com prüfen.
+</Callout>
+
+---
+layout: outro
+speaker: Vorname Nachname
+role: Rolle · SHI GmbH
+mail: vorname.nachname@shi-gmbh.com
+linkedin: profil-slug
+---
+
+# Vielen Dank!
+
+Fragen? Immer her damit.

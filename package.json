@@ -5,12 +5,25 @@
   "scripts": {
     "build": "slidev build",
     "dev": "slidev --open",
-    "export": "slidev export"
+    "export": "slidev export",
+    "export:pptx": "slidev export --format pptx"
   },
   "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/open-sans": "^5.3.0",
     "@slidev/cli": "^52.19.0",
-    "@slidev/theme-default": "latest",
-    "@slidev/theme-seriph": "latest",
-    "vue": "^3.5.33"
+    "@slidev/theme-default": "^0.25.0",
+    "mermaid": "^11.16.1",
+    "vue": "^3.5.41"
+  },
+  "devDependencies": {
+    "@iconify-json/carbon": "^1.2.25",
+    "@iconify-json/logos": "^1.2.12",
+    "@iconify-json/simple-icons": "^1.2.93",
+    "playwright-chromium": "^1.62.1"
+  },
+  "allowScripts": {
+    "playwright-chromium": true,
+    "fsevents": true
   }
 }

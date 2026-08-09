@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Platzhalter für die halbseitigen Bildlayouts (image-left / image-right).
+  Hochformat, weil diese Layouts eine halbe Folie randlos füllen.
+  Ersetzen durch Screenshot, Diagramm oder Foto aus public/.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" width="900" height="1100" role="img" aria-label="Platzhalter für eine Grafik">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#003c5f" />
+      <stop offset="100%" stop-color="#0a6ba0" />
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="1100" fill="url(#bg)" />
+
+  <g stroke="#ffffff" stroke-opacity="0.55" stroke-width="9" fill="none" stroke-linecap="round">
+    <rect x="270" y="430" width="360" height="240" rx="10" />
+    <path d="M300 620l90-95 70 70 90-120 50 60" />
+  </g>
+  <circle cx="360" cy="490" r="22" fill="#ffffff" fill-opacity="0.55" />
+
+  <text
+    x="450" y="740"
+    text-anchor="middle"
+    font-family="'Open Sans', sans-serif"
+    font-size="34" font-weight="700" letter-spacing="8"
+    fill="#ffffff" fill-opacity="0.75"
+  >PLATZHALTER</text>
+</svg>

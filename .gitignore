@@ -1,7 +1,15 @@
 node_modules
 .DS_Store
 dist
+
+# Export-Artefakte (exportFilename in slides.md)
+shi-slides.pdf
+shi-slides.pptx
 *.local
 .vite-inspect
 .remote-assets
 components.d.ts
+
+# Artefakte der Browser-Automatisierung (playwright-cli)
+.playwright
+.playwright-cli

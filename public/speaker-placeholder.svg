@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Platzhalter für Speaker-Fotos. Quadratisch (1:1), weil layouts/speaker.vue und
+  <SpeakerCard> das Bild quadratisch beschneiden. Liegt bewusst im Repo statt als
+  externer Dienst: funktioniert ohne Netz und wirft keine Rechtefragen auf.
+
+  Ersetzen durch das echte Porträt, ebenfalls quadratisch beschnitten.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 440" width="440" height="440" role="img" aria-label="Platzhalter für ein Speaker-Foto">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8f3fb" />
+      <stop offset="100%" stop-color="#a9d5ef" />
+    </linearGradient>
+  </defs>
+
+  <rect width="440" height="440" fill="url(#bg)" />
+
+  <!-- Kopf und Schultern überlappen leicht, sonst zerfällt die Silhouette in
+       zwei Formen. Angeschnitten wie ein echtes Porträt. -->
+  <g fill="#075aae">
+    <circle cx="220" cy="160" r="76" />
+    <path d="M12 440C12 320 105 230 220 230s208 90 208 210z" />
+  </g>
+
+  <text
+    x="220" y="418"
+    text-anchor="middle"
+    font-family="'Open Sans', sans-serif"
+    font-size="19" font-weight="700" letter-spacing="4"
+    fill="#ffffff" fill-opacity="0.75"
+  >PLATZHALTER</text>
+</svg>
