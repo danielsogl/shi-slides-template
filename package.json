@@ -5,6 +5,7 @@
   "scripts": {
     "build": "slidev build",
     "dev": "slidev --open",
+    "demo": "slidev demo.md --open",
     "export": "slidev export",
     "export:pptx": "slidev export --format pptx"
   },

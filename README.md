@@ -5,20 +5,31 @@ Kundenpräsentationen und interne Talks.
 
 ```bash
 npm install
-npm run dev          # http://localhost:3030
+npm run dev          # eigenes Deck (slides.md)  → http://localhost:3030
+npm run demo         # Referenzdeck (demo.md): alle Layouts & Komponenten
 npm run build        # statische SPA nach dist/
 npm run export       # PDF  (--dark für den Dark Mode)
 npm run export:pptx  # PowerPoint
 ```
 
+## Zwei Decks
+
+`slides.md` ist dein Deck – ein Gerüst aus Cover, Agenda, einer Inhaltsfolie und
+Outro, direkt überschreibbar. `demo.md` ist die Referenz: jedes Layout, jede
+Komponente, jeder Diagrammtyp in Aktion, mit den Erklärungen auf den Folien
+selbst. Nachschlagen mit `npm run demo`, danebenlegen, abschreiben.
+
 ## Neues Deck bauen
 
 1. Repo als Vorlage kopieren, `npm install`.
-2. Headmatter in `slides.md` anpassen: `title`, `themeConfig`, und auf der
-   Cover-Folie `subtitle`, `speaker`, `role`, `event`, `date`.
-3. Beispielfolien ersetzen. Firmenblock bei Bedarf via `src: ./pages/shi-company.md`
+2. Headmatter in `slides.md` anpassen: `title`, `seoMeta`, `themeConfig`, und auf
+   der Cover-Folie `subtitle`, `speaker`, `role`, `event`, `date`.
+3. Folien schreiben. Firmenblock bei Bedarf via `src: ./pages/shi-company.md`
    einbinden.
 4. Bilder nach `public/`, absolut referenzieren (`/architektur.png`).
+
+`demo.md` kann liegen bleiben – `npm run build` und der Deploy bauen nur
+`slides.md`. Wer es loswerden will, löscht die Datei und das `demo`-Script.
 
 Interne Decks bekommen `themeConfig.confidential: Intern – vertraulich` – das
 blendet ein Badge in die Fußzeile. **Vor externen Talks entfernen.**
@@ -47,7 +58,7 @@ vorbehalten; alles Kleinere nutzt `--shi-brand-text`, Blauflächen enden bei
 `--shi-blue-surface`. Die Akzentfarben (`--shi-accent-*`) sind **keine offizielle
 CI**, sondern eine kontrastgeprüfte Erweiterung für Diagramme und Callouts.
 
-Alle 39 Folien sind in Light und Dark per Playwright gegen WCAG AA geprüft:
+Das Referenzdeck ist in Light und Dark per Playwright gegen WCAG AA geprüft:
 0 Overflows, 0 Kontrastverstöße. Wenn du eigene Farben setzt, prüfe nach.
 
 Schrift: `@fontsource/open-sans` liegt als Paket im Repo, geladen in
@@ -163,8 +174,9 @@ Vortragenden abhängen.
 
 ## Deployen
 
-`npm run build` legt die SPA nach `dist/`. `netlify.toml` und `vercel.json` rufen
-genau dieses Kommando. Unter einem Unterpfad: `npm run build -- --base /deck/`.
+`npm run build` legt die SPA nach `dist/`. `vercel.json` ruft genau dieses
+Kommando und leitet alle Pfade auf `index.html` (SPA-Routing). Unter einem
+Unterpfad: `npm run build -- --base /deck/`.
 
 Der Build erzeugt bewusst **kein** PDF – `download: true` würde bei jedem Build
 einen Chromium-Export anstoßen, und auf den Deploy-Runnern ist kein Browser
@@ -173,8 +185,9 @@ installiert. Wer den Download-Button will: PDF per `npm run export` bauen, nach
 
 ## CI & Updates
 
-`.github/workflows/ci.yml` baut das Deck bei Push und PR und exportiert PDF und
-PPTX – genau die Pfade, die Slidev- oder Playwright-Updates brechen. Die Dateien
+`.github/workflows/ci.yml` baut bei Push und PR beide Decks und exportiert PDF
+und PPTX aus `demo.md` – dort steckt jedes Layout und jede Komponente drin, also
+bricht ein Slidev- oder Playwright-Update genau da zuerst. Die Dateien
 werden verworfen; der `upload-artifact`-Block ist auskommentiert und lässt sich
 bei Bedarf einkommentieren.
 
@@ -185,7 +198,8 @@ oder den Export verändern.
 ## Struktur
 
 ```
-slides.md              Deck – gleichzeitig Referenz aller Layouts
+slides.md              dein Deck – Startgerüst zum Überschreiben
+demo.md                Referenzdeck: alle Layouts, Komponenten, Diagramme
 pages/shi-company.md   wiederverwendbarer Firmenblock (via src: einbinden)
 layouts/               eigene SHI-Layouts
 components/            wiederverwendbare Bausteine
@@ -200,7 +214,7 @@ snippets/external.ts   Beispiel für `<<< @/snippets/…` (Code aus Datei)
 slide-bottom.vue       Fußzeile (Logo, Titel, Event, Seitenzahl, Badge)
 public/                Logos, Favicon, Platzhalterbilder, eigene Bilder
 .github/               CI-Workflow und Dependabot
-netlify.toml           Deploy-Konfiguration Netlify
+.nvmrc                 Node-Version (gleiche Major wie die CI)
 vercel.json            Deploy-Konfiguration Vercel
 ```
 
@@ -225,6 +239,11 @@ Verschiebe-Job, kein Rewrite.
 - `npm run export` braucht `playwright-chromium`. npm 11 blockt dessen
   Postinstall; der `allowScripts`-Eintrag in `package.json` gibt ihn frei –
   bewusst ohne Versions-Pin, sonst blockt jedes Dependabot-Update erneut.
+- `npm audit` meldet Funde aus Slidevs Transitivabhängigkeiten
+  (monaco-editor → dompurify, pptxgenjs → image-size). Beide betreffen Pfade,
+  die ein Deck nicht ausführt, und `npm audit fix --force` würde Slidev auf
+  einen älteren Major zurückdrehen. Nichts tun; Dependabot zieht nach, sobald
+  Slidev aktualisiert.
 - `comark: true` erlaubt `[Text]{style="color:red"}` und
   `![](/bild.png){width=500px}` direkt im Markdown.
 - Redezeit im Presenter-Modus: `duration: 30min` ins Headmatter.

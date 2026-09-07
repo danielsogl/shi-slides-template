@@ -23,13 +23,18 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 24 # gleiche Major wie netlify.toml
+          node-version: 24 # gleiche Major wie .nvmrc
           cache: npm
 
       - run: npm ci
 
-      - name: Deck bauen
+      - name: Startdeck bauen
         run: npm run build
+
+      # demo.md nutzt jedes Layout und jede Komponente – hier bricht ein
+      # Slidev-Update als Erstes. Deshalb laufen auch die Exporte darauf.
+      - name: Referenzdeck bauen
+        run: npx slidev build demo.md --out dist-demo
 
       # Der PDF-Export ist eine Kernfunktion des Templates und genau das, was
       # ein Slidev- oder Playwright-Update kaputt macht. Deshalb im CI mitgeprüft.
@@ -38,12 +43,12 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: PDF exportieren
-        run: npm run export -- --output shi-slides.pdf --timeout 60000
+        run: npx slidev export demo.md --output shi-slides.pdf --timeout 60000
 
       # PPTX läuft über einen anderen Pfad als PDF (Folien als PNG + pptxgenjs)
       # und bricht unabhängig davon. Kostet ~10 s, also mitgeprüft.
       - name: PPTX exportieren
-        run: npm run export:pptx -- --output shi-slides.pptx --timeout 60000
+        run: npx slidev export demo.md --format pptx --output shi-slides.pptx --timeout 60000
 
       # Das PDF wird nur erzeugt, um den Export zu prüfen, und danach verworfen –
       # dauerhaft hochgeladene Artefakte kosten unnötig Storage. Wer dieses Repo

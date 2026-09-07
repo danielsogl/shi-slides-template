@@ -1,6 +1,7 @@
 node_modules
 .DS_Store
 dist
+dist-demo
 
 # Export-Artefakte (exportFilename in slides.md)
 shi-slides.pdf
