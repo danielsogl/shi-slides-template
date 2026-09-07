@@ -20,7 +20,7 @@
     "@iconify-json/carbon": "^1.2.26",
     "@iconify-json/logos": "^1.2.13",
     "@iconify-json/simple-icons": "^1.2.94",
-    "playwright-chromium": "^1.62.1"
+    "playwright-chromium": "^1.63.0"
   },
   "allowScripts": {
     "playwright-chromium": true,
