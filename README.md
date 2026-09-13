@@ -10,6 +10,7 @@ npm run demo         # Referenzdeck (demo.md): alle Layouts & Komponenten
 npm run build        # statische SPA nach dist/
 npm run export       # PDF  (--dark für den Dark Mode)
 npm run export:pptx  # PowerPoint
+npm run skills       # optional: Agent-Skills (Slidev, playwright-cli) installieren
 ```
 
 ## Zwei Decks
@@ -216,6 +217,7 @@ public/                Logos, Favicon, Platzhalterbilder, eigene Bilder
 .github/               CI-Workflow und Dependabot
 .nvmrc                 Node-Version (gleiche Major wie die CI)
 vercel.json            Deploy-Konfiguration Vercel
+skills-lock.json       Agent-Skills (skills.sh), per `npm run skills` installiert
 ```
 
 `layouts/`, `components/` und `styles/` haben bereits die Struktur eines
