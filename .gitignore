@@ -14,3 +14,8 @@ components.d.ts
 # Artefakte der Browser-Automatisierung (playwright-cli)
 .playwright
 .playwright-cli
+
+# Agent-Skills (skills.sh) – Quelle und Hash stehen in skills-lock.json.
+# Wiederherstellen: npx skills experimental_install
+.agents/skills/
+.claude/skills/
