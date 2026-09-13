@@ -17,10 +17,11 @@ import mermaid from 'mermaid/dist/mermaid.esm.mjs'
  * Kanten, ruhigere Linien, größere Innenabstände. Dazu mehr Luft zwischen den
  * Knoten – auf einer Folie ist Weißraum wichtiger als Kompaktheit.
  *
- * ponytail: bewusst KEIN ELK-Layout (@mermaid-js/layout-elk). Es zieht elkjs
- * unter EPL-2.0/GPL-3.0 nach und bringt erst bei großen Graphen etwas – die
- * gehören ohnehin nicht auf eine Folie. Kleine Abläufe sehen mit <Flow> oder
- * <Layers> besser aus; Mermaid ist für Sequenzen, Zustände und Gantt da.
+ * ponytail: bewusst `layout: 'dagre'` statt ELK. Seit Mermaid 12 ist ELK
+ * gebündelt und Standard; es bringt erst bei großen Graphen etwas – die gehören
+ * ohnehin nicht auf eine Folie – und verändert das Bild bestehender Decks.
+ * Kleine Abläufe sehen mit <Flow> oder <Layers> besser aus; Mermaid ist für
+ * Sequenzen, Zustände und Gantt da.
  */
 
 /** Helle Palette – die Werte aus styles/_tokens.css. */
@@ -100,6 +101,7 @@ export default defineMermaidRendererSetup(() => {
       ...rest,
       theme: 'base',
       look: 'neo',
+      layout: 'dagre',
       themeVariables: {
         fontFamily: '"Open Sans", sans-serif',
         fontSize: '15px',
