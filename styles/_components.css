@@ -509,7 +509,7 @@ html.dark .shi-logowall--original {
   color: var(--shi-fg-muted);
 }
 .shi-speaker__links a:hover {
-  color: var(--shi-link);
+  color: var(--shi-brand-text);
 }
 .shi-bleed .shi-speaker__links a {
   color: var(--shi-blue-100);

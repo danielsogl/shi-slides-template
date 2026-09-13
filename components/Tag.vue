@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
 /** Kleines Label für Tech-Stack, Status, Kategorien. */
-const props = withDefaults(
+withDefaults(
   defineProps<{
     color?: 'blue' | 'teal' | 'amber' | 'coral' | 'violet' | 'green' | 'neutral'
     solid?: boolean
@@ -20,15 +18,13 @@ const COLORS = {
   green: 'var(--shi-accent-green)',
   neutral: 'var(--shi-fg-muted)',
 } as const
-
-const tagColor = computed(() => COLORS[props.color] ?? COLORS.blue)
 </script>
 
 <template>
   <span
     class="shi-tag"
     :class="{ 'shi-tag--solid': solid }"
-    :style="{ '--shi-tag-color': tagColor }"
+    :style="{ '--shi-tag-color': COLORS[color] ?? COLORS.blue }"
   >
     <span v-if="icon" :class="icon" />
     <slot />

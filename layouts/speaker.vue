@@ -36,18 +36,7 @@ defineProps<{
     class="slidev-layout shi-speaker-layout"
     :class="dark ? 'shi-bleed shi-surface-brand px-14! py-12!' : ''"
   >
-    <SpeakerCard
-      :name="name"
-      :role="role"
-      :image="image"
-      :mail="mail"
-      :linkedin="linkedin"
-      :github="github"
-      :bluesky="bluesky"
-      :mastodon="mastodon"
-      :web="web"
-      size="220px"
-    >
+    <SpeakerCard v-bind="$props" size="220px">
       <slot />
     </SpeakerCard>
   </div>

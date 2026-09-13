@@ -30,7 +30,6 @@
   /* Textfarbe auf gefüllten Markenflächen (Chips, solide Tags). Im Dark Mode
      ist --shi-brand-text aufgehellt, dort muss der Text dunkel werden. */
   --shi-on-brand: #ffffff;
-  --shi-link: var(--shi-blue-hover);
 
   /* --- Neutral --- */
   --shi-ink: #3a3a3a;
@@ -83,7 +82,6 @@ html.dark {
   --shi-brand: #3ba3e0; /* aufgehelltes SHI-Blau, 6.5:1 auf #0e1116 */
   --shi-brand-text: #6ec1ef;
   --shi-on-brand: #0e1116; /* dunkler Text auf hellem Chip, 9.5:1 */
-  --shi-link: #6ec1ef;
   --shi-surface: #161b22;
 
   --shi-accent-teal: #45c2bd;
