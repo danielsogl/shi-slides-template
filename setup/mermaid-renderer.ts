@@ -1,6 +1,6 @@
-import { useDarkMode } from '@slidev/client'
 import { defineMermaidRendererSetup } from '@slidev/types'
 import mermaid from 'mermaid/dist/mermaid.esm.mjs'
+import { nextTick } from 'vue'
 
 /**
  * Mermaid im SHI-Design – Light und Dark.
@@ -24,69 +24,42 @@ import mermaid from 'mermaid/dist/mermaid.esm.mjs'
  * Sequenzen, Zustände und Gantt da.
  */
 
-/** Helle Palette – die Werte aus styles/_tokens.css. */
-const light = {
-  primaryColor: '#f3f8fb',
-  primaryTextColor: '#3a3a3a',
-  primaryBorderColor: '#0d81c4',
-  secondaryColor: '#d6ebf8',
-  secondaryBorderColor: '#075aae',
-  tertiaryColor: '#f5f5f5',
-  tertiaryBorderColor: '#e5e5e5',
-  textColor: '#3a3a3a',
-  lineColor: '#4b4f58',
-  noteBkgColor: '#003c5f',
-  noteTextColor: '#ffffff',
-  noteBorderColor: '#003c5f',
-  actorBkg: '#d6ebf8',
-  actorBorder: '#075aae',
-  actorTextColor: '#3a3a3a',
-  actorLineColor: '#9aa7b4',
-  signalColor: '#4b4f58',
-  signalTextColor: '#3a3a3a',
-  labelBoxBkgColor: '#f3f8fb',
-  labelBoxBorderColor: '#0d81c4',
-  labelTextColor: '#3a3a3a',
-  loopTextColor: '#4b4f58',
-  activationBkgColor: '#a9d5ef',
-  activationBorderColor: '#075aae',
+/**
+ * Mermaid-Variable → Token aus styles/_tokens.css. Hell/Dunkel entscheidet das
+ * Stylesheet (`html.dark`), hier stehen keine Farbwerte.
+ */
+const PALETTE = {
+  primaryColor: '--shi-card-alt',
+  primaryTextColor: '--shi-fg',
+  primaryBorderColor: '--shi-brand',
+  secondaryColor: '--shi-diagram-fill',
+  secondaryBorderColor: '--shi-diagram-stroke',
+  tertiaryColor: '--shi-surface',
+  tertiaryBorderColor: '--shi-border',
+  textColor: '--shi-fg',
+  lineColor: '--shi-fg-muted',
+  noteBkgColor: '--shi-diagram-note',
+  noteTextColor: '--shi-diagram-note-text',
+  noteBorderColor: '--shi-diagram-note-border',
+  actorBkg: '--shi-diagram-fill',
+  actorBorder: '--shi-diagram-stroke',
+  actorTextColor: '--shi-fg',
+  actorLineColor: '--shi-diagram-lifeline',
+  signalColor: '--shi-fg-muted',
+  signalTextColor: '--shi-fg',
+  labelBoxBkgColor: '--shi-diagram-label',
+  labelBoxBorderColor: '--shi-brand',
+  labelTextColor: '--shi-fg',
+  loopTextColor: '--shi-diagram-loop-text',
+  activationBkgColor: '--shi-diagram-activation',
+  activationBorderColor: '--shi-diagram-stroke',
   // Ziffer in den autonumber-Kreisen. Ohne das leitet Mermaid sie aus
   // `invert(lineColor)` ab – ein Beige, das auf dem schwarzen Kreis kaum
   // lesbar ist. Der Kreis selbst hat keine Klasse, den holt das themeCSS.
-  sequenceNumberColor: '#ffffff',
-}
-
-/** Dunkle Palette – die Rollen aus dem `html.dark`-Block in styles/_tokens.css. */
-const dark: typeof light = {
-  primaryColor: '#10202c',
-  primaryTextColor: '#e8edf2',
-  primaryBorderColor: '#3ba3e0',
-  secondaryColor: '#16324a',
-  secondaryBorderColor: '#3ba3e0',
-  tertiaryColor: '#161b22',
-  tertiaryBorderColor: '#262e38',
-  textColor: '#e8edf2',
-  lineColor: '#9aa7b4',
-  noteBkgColor: '#16324a',
-  noteTextColor: '#e8edf2',
-  noteBorderColor: '#3ba3e0',
-  actorBkg: '#16324a',
-  actorBorder: '#3ba3e0',
-  actorTextColor: '#e8edf2',
-  actorLineColor: '#7c8794',
-  signalColor: '#9aa7b4',
-  signalTextColor: '#e8edf2',
-  labelBoxBkgColor: '#161b22',
-  labelBoxBorderColor: '#3ba3e0',
-  labelTextColor: '#e8edf2',
-  loopTextColor: '#e8edf2',
-  activationBkgColor: '#16324a',
-  activationBorderColor: '#3ba3e0',
-  sequenceNumberColor: '#0e1116',
+  sequenceNumberColor: '--shi-on-brand',
 }
 
 export default defineMermaidRendererSetup(() => {
-  const { isDark } = useDarkMode()
   let counter = 0
 
   return async (code, options) => {
@@ -94,7 +67,13 @@ export default defineMermaidRendererSetup(() => {
     // undefined, das würde unsere Palette überschreiben. Alles andere
     // (z. B. `scale` am Codeblock) bleibt.
     const { theme: _slidevTheme, ...rest } = options
-    const brand = isDark.value ? '#3ba3e0' : '#075aae'
+
+    // Slidev rendert aus einem watchEffect heraus, VueUse setzt `html.dark`
+    // aber erst mit flush: 'post'. Ohne diesen Tick läse ein Umschalten noch
+    // die Tokens des alten Modus.
+    await nextTick()
+    const css = getComputedStyle(document.documentElement)
+    const token = (name: string) => css.getPropertyValue(name).trim()
 
     mermaid.initialize({
       startOnLoad: false,
@@ -105,13 +84,13 @@ export default defineMermaidRendererSetup(() => {
       themeVariables: {
         fontFamily: '"Open Sans", sans-serif',
         fontSize: '15px',
-        ...(isDark.value ? dark : light),
+        ...Object.fromEntries(Object.entries(PALETTE).map(([key, name]) => [key, token(name)])),
       },
       // Zwei Stellen, an die keine Theme-Variable heranreicht: der Kreis hinter
       // der autonumber-Ziffer (ein <marker><circle> ohne Klasse, deshalb per
       // Default schwarz) und die dort fest verdrahtete sans-serif.
       themeCSS: `
-        marker[id$='-sequencenumber'] circle { fill: ${brand}; }
+        marker[id$='-sequencenumber'] circle { fill: ${token('--shi-diagram-stroke')}; }
         text.sequenceNumber { font-family: "Open Sans", sans-serif; font-weight: 600; }
       `,
       flowchart: {

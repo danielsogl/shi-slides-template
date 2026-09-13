@@ -62,6 +62,17 @@
   --shi-card-alt: var(--shi-blue-tint);
   --shi-brand: var(--shi-blue);
 
+  /* --- Diagramme (setup/mermaid-renderer.ts liest sie beim Rendern) --- */
+  --shi-diagram-fill: var(--shi-blue-100); /* Akteure, sekundäre Knoten */
+  --shi-diagram-stroke: var(--shi-blue-hover); /* deren Kanten, autonumber-Kreis */
+  --shi-diagram-activation: var(--shi-blue-200);
+  --shi-diagram-lifeline: #9aa7b4;
+  --shi-diagram-label: var(--shi-card-alt);
+  --shi-diagram-loop-text: var(--shi-fg-muted);
+  --shi-diagram-note: var(--shi-navy);
+  --shi-diagram-note-text: var(--shi-white);
+  --shi-diagram-note-border: var(--shi-navy);
+
   /* --- Maße --- */
   --shi-radius: 6px;
   --shi-skew: -6deg; /* Neigung des Logo-Parallelogramms als Brand-Device */
@@ -83,6 +94,16 @@ html.dark {
   --shi-brand-text: #6ec1ef;
   --shi-on-brand: #0e1116; /* dunkler Text auf hellem Chip, 9.5:1 */
   --shi-surface: #161b22;
+
+  --shi-diagram-fill: #16324a;
+  --shi-diagram-stroke: var(--shi-brand);
+  --shi-diagram-activation: #16324a;
+  --shi-diagram-lifeline: var(--shi-fg-dim);
+  --shi-diagram-label: var(--shi-card);
+  --shi-diagram-loop-text: var(--shi-fg);
+  --shi-diagram-note: #16324a;
+  --shi-diagram-note-text: var(--shi-fg);
+  --shi-diagram-note-border: var(--shi-brand);
 
   --shi-accent-teal: #45c2bd;
   --shi-accent-amber: #e8a33d;
