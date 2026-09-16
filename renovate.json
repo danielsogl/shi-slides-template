@@ -1,6 +1,25 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  "extends": ["config:recommended", ":semanticCommits"],
+  "automergeStrategy": "squash",
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "description": "Alles unter major in einen PR – CI baut Startdeck, Demo, PDF und PPTX, das reicht als Gate.",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "deps (non-major)",
+      "automerge": true
+    },
+    {
+      "description": "Actions-Bumps sind reine CI-Änderungen, der Lauf prüft sich selbst.",
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions",
+      "automerge": true
+    },
+    {
+      "description": "Major-Bumps von Slidev, Vue, Mermaid und Playwright brechen Layouts sichtbar – die schaut sich jemand an.",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
   ]
 }
