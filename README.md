@@ -192,9 +192,10 @@ bricht ein Slidev- oder Playwright-Update genau da zuerst. Die Dateien
 werden verworfen; der `upload-artifact`-Block ist auskommentiert und lässt sich
 bei Bedarf einkommentieren.
 
-`.github/dependabot.yml` prüft montags npm und GitHub Actions. Minor und Patch
-kommen gesammelt, Majors einzeln – ein Slidev-Major kann Layouts, Shiki-Themes
-oder den Export verändern.
+`renovate.json` steuert die Updates: alles unter Major kommt gesammelt in einem
+PR und mergt sich nach grünem CI selbst, Majors bleiben liegen – ein
+Slidev-Major kann Layouts, Shiki-Themes oder den Export verändern und will
+angesehen werden.
 
 ## Struktur
 
@@ -214,7 +215,8 @@ setup/shiki.ts         Code-Theme (github-*-high-contrast, AA-tauglich)
 snippets/external.ts   Beispiel für `<<< @/snippets/…` (Code aus Datei)
 slide-bottom.vue       Fußzeile (Logo, Titel, Event, Seitenzahl, Badge)
 public/                Logos, Favicon, Platzhalterbilder, eigene Bilder
-.github/               CI-Workflow und Dependabot
+.github/               CI-Workflow
+renovate.json          Update-Regeln (Gruppen, Automerge)
 .nvmrc                 Node-Version (gleiche Major wie die CI)
 vercel.json            Deploy-Konfiguration Vercel
 skills-lock.json       Agent-Skills (skills.sh), per `npm run skills` installiert
@@ -240,11 +242,11 @@ Verschiebe-Job, kein Rewrite.
   `npm run export -- --with-clicks`.
 - `npm run export` braucht `playwright-chromium`. npm 11 blockt dessen
   Postinstall; der `allowScripts`-Eintrag in `package.json` gibt ihn frei –
-  bewusst ohne Versions-Pin, sonst blockt jedes Dependabot-Update erneut.
+  bewusst ohne Versions-Pin, sonst blockt jedes Update erneut.
 - `npm audit` meldet Funde aus Slidevs Transitivabhängigkeiten
   (monaco-editor → dompurify, pptxgenjs → image-size). Beide betreffen Pfade,
   die ein Deck nicht ausführt, und `npm audit fix --force` würde Slidev auf
-  einen älteren Major zurückdrehen. Nichts tun; Dependabot zieht nach, sobald
+  einen älteren Major zurückdrehen. Nichts tun; Renovate zieht nach, sobald
   Slidev aktualisiert.
 - `comark: true` erlaubt `[Text]{style="color:red"}` und
   `![](/bild.png){width=500px}` direkt im Markdown.

@@ -9,7 +9,7 @@ on:
 permissions:
   contents: read
 
-# Ältere Läufe desselben Branches abbrechen – spart Minuten bei Dependabot-PRs.
+# Ältere Läufe desselben Branches abbrechen – spart Minuten bei Renovate-PRs.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
