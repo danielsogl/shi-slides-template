@@ -8,7 +8,7 @@
     "demo": "slidev demo.md --open",
     "export": "slidev export",
     "export:pptx": "slidev export --format pptx",
-    "skills": "npx skills experimental_install -y"
+    "skills": "npx skills update -p -y"
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.3.0",
