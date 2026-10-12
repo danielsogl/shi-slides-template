@@ -124,9 +124,16 @@
 }
 
 /* --- agenda --- */
+/* Mehr seitliche Luft als die Inhaltsfolien: Notiz links und Hints rechts
+   stehen sonst bündig an der Satzkante und wirken am Rand klebend.
+   4.5rem wie beim Statement-Layout. */
+.shi-agenda-layout {
+  padding-left: 4.5rem;
+  padding-right: 4.5rem;
+}
 .shi-agenda {
   display: grid;
-  grid-template-columns: 1fr 1.9fr;
+  grid-template-columns: 0.8fr 2fr;
   gap: 2.6rem;
   align-items: start;
 }
@@ -158,6 +165,16 @@
   border-radius: var(--shi-radius);
   border-left: 3px solid transparent;
   transition: background 0.2s, opacity 0.2s;
+}
+/* Die Theme-Regel `.slidev-layout li` ist spezifischer als `.shi-agenda__item`
+   und setzt padding-right auf 0 sowie einen Listen-Einzug. Ohne diese Regel
+   klebte der Hint an der Kante des hervorgehobenen Punkts. Nur Abstände hier,
+   damit der Rand von `--current` weiter greift. */
+.slidev-layout .shi-agenda__item {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1.35rem;
+  padding-right: 1.1rem;
 }
 .shi-agenda__item::before {
   content: counter(shi-agenda, decimal-leading-zero);
